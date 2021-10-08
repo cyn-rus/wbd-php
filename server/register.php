@@ -4,7 +4,7 @@
         $password = $_REQUEST['inputPassword'];
         $email = $_REQUEST['inputEmail'];
 
-        $db = new SQLite3('../db/users.sq3');
+        $db = new SQLite3('../db/doraemonangis.sq3');
 
         if(!$db) {
             echo $db->lastErrorMsg();
@@ -21,7 +21,7 @@
         if(!$ret){
             echo $db->lastErrorMsg();
         } else {
-            echo "Insert data is success...\n";
+            echo "Insert data success...\n";
         }
     }
 ?>
