@@ -11,8 +11,25 @@
 
     <script src='../components/header.js' defer></script>
 
+    <script src='../script/helper.js' defer></script>
+    <script src='../script/search.js' defer></script>
+
 </head>
 <body>
-    <div id='header'></div>
+    <!-- <div id='header'></div> -->
+    <div id='container' class='search-container'>
+        <div class='search-bar'>
+            <form>
+                <input type="text" id='searchDorayaki' name='searchDorayaki'>
+            </form>
+        </div>
+        <div id='searchResult'></div>
+        <div class='pagination-menu'>
+            <button id='previousButton'>← Previous</button>
+            <div id='selectPagination'></div>
+            <button id='nextButton'>Next →</button>
+        </div>
+        <p>Page of: <span id='currPage'></span> / <span id='totalPages'></span></p>
+    </div>
 </body>
 </html>
