@@ -4,9 +4,29 @@
 
 // isAdmin: boolean
 function renderHeader(isAdmin) {
-    return (
+    if (isAdmin){
+        return(
+            <div>
+            <div class='search-bar'>
+                <form>
+                    <input type="text" id='searchDorayaki' name='searchDorayaki'></input>
+                </form>
+            </div>
+            <button onclick="window.location.href='./pages/add.html'">Add Dorayaki Variant</button>
+            <button onclick="window.location.href='./pages/login.html'">Logout</button>
+            </div>
+        )
+    }
+    
+    return(
         <div>
-
+        <div class='search-bar'>
+            <form>
+                <input type="text" id='searchDorayaki' name='searchDorayaki'></input>
+            </form>
+        </div>
+        {/* <button onclick="window.location.href='./pages/add.html'">History</button> */}
+        <button onclick="window.location.href='./pages/login.html'">Logout</button>
         </div>
     )
 }
