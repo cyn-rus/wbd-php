@@ -1,27 +1,10 @@
-function fetchDorayakis() {
-    return new Promise(function (resolve, reject) {
-        const objXMLHttpRequest = new XMLHttpRequest()
+async function renderSearch(dorayaki) {
+    const inputField = document.getElementById('searchDorayaki')
+    inputField.value = dorayaki
 
-        objXMLHttpRequest.onreadystatechange = function () {
-            if (objXMLHttpRequest.readyState === 4) {
-                if (objXMLHttpRequest.status === 200) {
-                    resolve(objXMLHttpRequest.responseText)
-                } else {
-                    reject('Error code: ' + objXMLHttpRequest.status + 'Error message: ' + objXMLHttpRequest.statusText)
-                }
-            }
-        }
-
-        objXMLHttpRequest.open('GET', `../../server/searchDorayaki.php?q=${'dorayaki'}`, true)
-        objXMLHttpRequest.send()
-
-    })
-}
-
-async function renderSearch() {
     let currPage = 1
-    const dorayakisPerPage = 3
-    const dorayakis = await fetchDatas(`searchDorayaki.php?q=${'dorayaki'}`)
+    const dorayakisPerPage = 2
+    const dorayakis = await fetchDatas(`searchDorayaki.php?q=${dorayaki}`)
         .then(data => {
             return parseDataFromAJAX(data)
         })
@@ -30,9 +13,9 @@ async function renderSearch() {
     const totalPagination = document.getElementById('totalPages')
     totalPagination.textContent = totalPages
     const previousButton = document.getElementById('previousButton')
-    previousButton.onclick = prevPage()
+    previousButton.onclick = function() {prevPage()}
     const nextButton = document.getElementById('nextButton')
-    nextButton.onclick = nextPage()
+    nextButton.onclick = function() {nextPage()}
 
     function prevPage() {
         if (currPage > 1) {
@@ -73,11 +56,14 @@ async function renderSearch() {
     function renderSelect() {
         const selectPagination = document.getElementById('selectPagination')
         selectPagination.innerHTML = ''
-        for (const i = 1; i < totalPages; i++) {
+        for (let i = 1; i <= totalPages; i++) {
             const number = document.createElement('button')
             number.innerHTML = i + ' '
             number.id = 'pageNumber'
-            number.onclick = renderPagination(idx)
+            number.onclick = function() {
+                currPage = i
+                renderPagination(i)
+            }
             selectPagination.appendChild(number)
         }
     }
@@ -86,4 +72,6 @@ async function renderSearch() {
     renderPagination(currPage)
 }
 
-renderSearch()
+const dorayaki = window.location.search.split('=')[1]
+
+renderSearch(dorayaki)
