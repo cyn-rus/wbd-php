@@ -9,10 +9,34 @@
 
     <link rel="stylesheet" href="../style/index.css">
 
-    <script src='../components/header.js' defer></script>
+    <!-- <script src='../components/header.js' defer></script> -->
+
+    <script src='../script/helper.js' defer></script>
+    <script src='../script/stock.js' defer></script>
 
 </head>
 <body>
     <div id='header'></div>
+    <div id='container'>
+        <div class='stock-card'>
+            <div class='stock-img'>
+                <img id='stockImg' src="" alt="">
+            </div>
+            <div class='stock-desc'>
+                <h1 id='dorayakiName' class='dorayaki-name'></h1>
+                <h2 id='dorayakiPrice' class='dorayaki-price'></h2>
+                <h2 id='dorayakiAvailableStock' class='dorayaki-available-stock'></h2>
+                <div class='change-stock'>
+                    <button id='reduceStock' class='reduce-stock'>-</button>
+                    <p id='currStock' class='curr-stock'></p>
+                    <button id='addStock' class='add-stock'>+</button>
+                </div>
+                <h2 id='dorayakiTotalPrice' class='dorayaki-total-price'></h2>
+            </div>
+        </div>
+        <div class='submit-button'>
+            <button id='submitStock'>Submit</button>
+        </div>
+    </div>
 </body>
 </html>
