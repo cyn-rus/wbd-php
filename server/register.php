@@ -20,8 +20,10 @@
 
         if(!$ret){
             echo $db->lastErrorMsg();
+            header('Location: ../client/pages/register.html');
         } else {
             echo "Insert data success...\n";
+            header('Location: ../client/pages/login.html');
         }
     }
 ?>
