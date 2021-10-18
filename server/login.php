@@ -20,6 +20,9 @@
         $cookie_value = $_REQUEST['inputUsername'];
         setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
         // $_COOKIE['username'] = $username;
+        session_start();
+        $_SESSION['username'] = $_REQUEST['inputUsername'];
+        $_SESSION['email'] = $_REQUEST['inputEmail'];
         header("location:../client/pages/dashboard.html");
     } else {
         echo "login fail";
