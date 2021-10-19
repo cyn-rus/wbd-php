@@ -4,7 +4,3 @@ function renderDorayakiCard(name, desc, sold, image) {
                 <div>${desc}</div>
                 <div>${sold}</div>`
 }
-
-export default function renderDorayakiContainer() {
-
-}
