@@ -1,8 +1,7 @@
 // import renderDorayakiContainer from "../components/dorayakiCard";
 
-const maxDisplayedDorayaki = 8;
 
-
+// Menampilkan username pengguna
 const username = document.getElementById("username");
 let usernameCookie = decodeURIComponent(document.cookie);
 // let usernameCookie = document.cookie;
@@ -12,12 +11,35 @@ const child = `<div>${usernameFromCookie}<\div>`
 username.innerHTML = child;
 
 
-function topDorayakiDisplay(){
-    for (i = 0; i < maxDisplayedDorayaki; i++)
-    {
-        
+
+const maxDisplayedDorayaki = 8;
+
+async function renderDashboardDorayaki(){
+    const popularDorayakis = await fetchDatas(`dashboard.php?max=${maxDisplayedDorayaki}`)
+        .then(data =>{
+            return parseDataFromAJAX(data)
+        })
+    console.log(popularDorayakis)
+    function renderPopularDorayakiDisplay(){
+        const popularDorayakiDisplay = document.getElementById('popularDorayakiDisplay')
+        for (let i = 0; i < maxDisplayedDorayaki && i < popularDorayakis.length; i++){
+            popularDorayakiDisplay.innerHTML += popularDorayakis[i].name + '<br>'
+            popularDorayakiDisplay.innerHTML += popularDorayakis[i].amount + '<br>'
+            console.log(popularDorayakis[i].name)
+        }
     }
+
+    renderPopularDorayakiDisplay()
 }
+
+renderDashboardDorayaki()
+
+// function topDorayakiDisplay(){
+//     for (i = 0; i < maxDisplayedDorayaki; i++)
+//     {
+        
+//     }
+// }
 
 
 
