@@ -3,30 +3,35 @@
 // user: search bar, daftar pembelian (bonus), logout
 
 // isAdmin: boolean
-function renderHeader(isAdmin) {
-    if (isAdmin){
-        return(
-            <div>
-            <div class='search-bar'>
-                <form>
-                    <input type="text" id='searchDorayaki' name='searchDorayaki'></input>
-                </form>
-            </div>
-            <button onclick="window.location.href='./pages/add.html'">Add Dorayaki Variant</button>
-            <button onclick="window.location.href='./pages/login.html'">Logout</button>
-            </div>
-        )
+const isAdmin = getCookie('isadmin')
+
+function renderHeader() {
+    const header = document.getElementById('header')
+    let child = `   <div class='search-bar'>
+                        <input type="text" id='searchDorayaki' name='q'></input>
+                    </div>`
+        
+    if (isAdmin === "1"){
+        child += `<button class="button" onclick="window.location.href='add.html'">Add Dorayaki Variant</button>`
     }
-    
-    return(
-        <div>
-        <div class='search-bar'>
-            <form>
-                <input type="text" id='searchDorayaki' name='searchDorayaki'></input>
-            </form>
-        </div>
-        {/* <button onclick="window.location.href='./pages/add.html'">History</button> */}
-        <button onclick="window.location.href='./pages/login.html'">Logout</button>
-        </div>
-    )
+
+    child += `
+        <button onclick="window.location.href='dashboard.html'">Dashboard</button>
+        <button onclick="window.location.href='history.html'">History</button>
+        <form action='../../server/logout.php'>
+            <input class="button" type='submit' value='Logout'>
+        </form>
+    `
+
+    header.innerHTML = child
+
+    const searchBar = document.getElementById('searchDorayaki');
+    searchBar.addEventListener('keydown', (e) => {
+        console.log(e)
+        if (e.key === 'Enter') {
+            window.location = `search.html?q=${e.target.value}`
+        }
+    });
 }
+
+renderHeader()
