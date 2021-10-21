@@ -1,6 +1,5 @@
 <?php
     $dorayaki = $_REQUEST['q'];
-    $found = 0;
 
     if ($dorayaki !== '') {
         $db = new SQLite3('../../db/doraemonangis.sq3');
