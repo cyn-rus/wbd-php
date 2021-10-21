@@ -1,13 +1,34 @@
+function clearPage() {
+    document.getElementById('paginationMenu').innerHTML = ''
+    document.getElementsByTagName('p')[0].innerHTML = ''
+
+}
+
 async function renderSearch(dorayaki) {
+    let currPage = 1
+    const dorayakisPerPage = 2
+
+    if (!dorayaki || dorayaki === '') {
+        clearPage()
+        return
+    }
+
+    const dorayakis = await fetchDatas(`searchDorayaki.php?q=${dorayaki}`)
+    .then(data => {
+        return parseDataFromAJAX(data)
+    })
+
     const inputField = document.getElementById('searchDorayaki')
     inputField.value = dorayaki
 
-    let currPage = 1
-    const dorayakisPerPage = 2
-    const dorayakis = await fetchDatas(`searchDorayaki.php?q=${dorayaki}`)
-        .then(data => {
-            return parseDataFromAJAX(data)
-        })
+    if (dorayakis.length === 0) {
+        clearPage()
+        document.getElementById('searchResult').innerHTML = 
+        `
+            <h2 class='no-result'>No search result for '${dorayaki}'</h2>
+        `
+        return
+    }
 
     const totalPages = Math.ceil(dorayakis.length / dorayakisPerPage)
     const totalPagination = document.getElementById('totalPages')
@@ -49,7 +70,7 @@ async function renderSearch(dorayaki) {
 
         searchResult.innerHTML = ''
         for (let i = (idx - 1) * dorayakisPerPage; i < (idx * dorayakisPerPage) && i < dorayakis.length; i++) {
-            searchResult.innerHTML += dorayakis[i].name + '<br>'
+            searchResult.innerHTML += renderDorayakiCard(dorayakis[i], true)
         }
     }
 
