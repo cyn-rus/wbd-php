@@ -1,4 +1,24 @@
 <?php
+    function Cipher($ch, $key)
+    {
+        if (!ctype_alpha($ch))
+            return $ch;
+
+        $offset = ord(ctype_upper($ch) ? 'A' : 'a');
+        return chr(fmod(((ord($ch) + $key) - $offset), 26) + $offset);
+    }
+
+    function Encipher($input, $key)
+    {
+        $output = "";
+
+        $inputArr = str_split($input);
+        foreach ($inputArr as $ch)
+            $output .= Cipher($ch, $key);
+
+        return $output;
+    }
+
     if (isset($_POST['submit'])) {
         $username = $_REQUEST['inputUsername'];
         $password = $_REQUEST['inputPassword'];
@@ -12,18 +32,20 @@
             echo "Open database success...\n";
         }
 
-        $sql = "INSERT INTO users VALUES('" . $username . "','" . $password . "','" . $email . "'," . 0 . ')';
-        
-        echo $sql;
-        
-        $ret = $db->exec($sql);
+        if(!empty($username) and !empty($password) and !empty($email)) {
+            $sql = "INSERT INTO users VALUES('" . $username . "','" . Encipher($password,5) . "','" . $email . "'," . 0 . ')';
+                    
+            $ret = $db->exec($sql);
 
-        if(!$ret){
-            echo $db->lastErrorMsg();
-            header('Location: ../client/pages/register.html');
+            if(!$ret){
+                echo $db->lastErrorMsg();
+                header('Location: ../client/pages/register.html');
+            } else {
+                echo "Insert data success...\n";
+                header('Location: ../client/pages/login.html');
+            }
         } else {
-            echo "Insert data success...\n";
-            header('Location: ../client/pages/login.html');
+            header('Location: ../client/pages/register.html'); 
         }
     }
 ?>
