@@ -15,9 +15,11 @@ async function checkAvailability() {
 
     if (found === 1) {
         tmpStatus.innerHTML = 'Username not available'
+        document.getElementById('inputUsername').style.border = "2px solid red"
         status.appendChild(tmpStatus)
     } else {
         tmpStatus.innerHTML = 'Username available'
+        document.getElementById('inputUsername').style.border = "2px solid rgb(87, 247, 111)"
         status.appendChild(tmpStatus)
     }
 }
