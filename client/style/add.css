@@ -6,13 +6,14 @@ h1 {
 
 body, html {
     height : 100vh;
-    overflow-y: hidden;
 }
 
-.containerLogin {
+.containerAdd {
+    display:flex;
     text-align: center;
+    position:absolute;
 }
-
+  
 input {
     margin : 5px;
     width :300px;
@@ -22,4 +23,9 @@ input {
 .submitButton {
     width : 70px;
     margin-top : 5px;
+}
+
+.buttonLogout {
+    display: flex;
+    filter: blur(0px);
 }
