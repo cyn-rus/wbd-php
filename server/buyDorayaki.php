@@ -5,9 +5,9 @@
 
     $db = new SQLite3('../db/doraemonangis.sq3');
 
-    $sqlUpdate = "UPDATE dorayakis "
-        . "SET stock = stock - " . $changed_stock . " "
-        . "WHERE dorayaki_name = '" . $dorayaki . "' ";
+    $sqlUpdate = "UPDATE dorayakis
+        SET stock = " . $changed_stock . "
+        WHERE dorayaki_name = '" . $dorayaki . "' ";
 
     $ret = $db->exec($sqlUpdate);
 

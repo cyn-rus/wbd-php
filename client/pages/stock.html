@@ -13,7 +13,6 @@
     <script src='../script/helper.js' defer></script>
     <script src='../components/header.js' defer></script>
     <script src='../script/stock.js' defer></script>
-    <script src='../components/header.js' defer></script>
     <script src='../script/index.js' defer></script>
 
 </head>
@@ -28,13 +27,13 @@
                 </div>
                 <div class='stock-desc'>
                     <h1 id='dorayakiName' class='dorayaki-name'></h1>
-                    <h2 id='dorayakiPrice' class='dorayaki-price'>Price: <span id='dorayakiPrice'></span></h2>
+                    <h2 id='dorayakiPrice' class='dorayaki-price'>Price: <span id='dorayakiPriceSpan'></span></h2>
                     <h2 class='dorayaki-available-stock'>Available Stock: <span id='dorayakiAvailableStock'></span></h2>
                 </div>
             </div>
             <div class='change-stock-detail'>
                 <div class='change-stock-buttons'>
-                    <h2 class='change-stock-text'>Buy Dorayaki</h2>
+                    <h2 id='changeStockText' class='change-stock-text'></h2>
                     <div class='buttons'>
                         <button id='reduceStock' class='reduce-stock'>-</button>
                         <h3 id='currStock' class='curr-stock'></h3>
@@ -48,7 +47,7 @@
             </div>
         </div>
         <div class='submit-button'>
-            <button id='submitStock'>Submit</button>
+            <button id='submitStock' disabled='true'>Submit</button>
             <h2 id='successText' style='opacity:0'></h2>
         </div>
     </div>

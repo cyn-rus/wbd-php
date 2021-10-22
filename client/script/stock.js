@@ -5,7 +5,7 @@ const imgPath = '../../db/images/'
 
 function isStockValid(availableStock, currStock) {
     if (currStock >= 0 && currStock <= availableStock) return true
-    if (currStock > availableStock && isAdmin) return true
+    if (currStock >= availableStock && isAdmin === '1') return true
     return false
 }
 
@@ -16,7 +16,7 @@ function changeStock(price, stock) {
 }
 
 async function renderStock(dorayakiID) {
-    document.title = (isAdmin ? 'Change Dorayaki Stock' : 'Buy Dorayaki') + ' | Mahi Mahi'
+    document.title = (isAdmin === '1' ? 'Change Dorayaki Stock' : 'Buy Dorayaki') + ' | Mahi Mahi'
 
     const dorayaki = await fetchDatas(`helper/getDorayakiByID.php?q=${dorayakiID}`)
         .then(data => {
@@ -33,19 +33,19 @@ async function renderStock(dorayakiID) {
     }
 
     let availableStock = dorayaki.stock
-    let currStock = dorayaki.stock
+    let currStock = isAdmin === '1' ? dorayaki.stock : 0
     const successText = document.getElementById('successText')
 
     function reduceStock() {
         if (isStockValid(availableStock, currStock-1)) {
             currStock--
-            addButton.style.opacity = 1
-            submitButton.style.opacity = currStock === availableStock ? 0 : 1
+            addButton.disabled = false
+            submitButton.disabled = currStock === availableStock || (currStock === 0 && isAdmin !== '1') ? true : false
             successText.style.opacity = 0
             changeStock(dorayaki.price, currStock)
 
             if (currStock === 0) {
-                reduceButton.style.opacity = 0
+                reduceButton.disabled = true
             }
         }
     }
@@ -53,48 +53,50 @@ async function renderStock(dorayakiID) {
     function addStock() {
         if (isStockValid(availableStock, currStock+1)) {
             currStock++
-            reduceButton.style.opacity = 1
+            reduceButton.disabled = false
+            submitButton.disabled = currStock === availableStock ? (isAdmin === '1' ? true : false) : (false)
             successText.style.opacity = 0
             changeStock(dorayaki.price, currStock)
 
-            submitButton.style.opacity = currStock === availableStock ? 0 : 1
+            if (currStock >= availableStock && isAdmin !== '1') {
+                addButton.disabled = true
+            }
         }
     }
 
     document.getElementById('stockImg').src = imgPath + dorayaki.image
     document.getElementById('stockImg').alt = capitalizeSentence(dorayaki.name)
     document.getElementById('dorayakiName').innerHTML = capitalizeSentence(dorayaki.name)
+    document.getElementById('changeStockText').innerHTML = isAdmin === '1' ? 'Change Dorayaki Stock' : 'Buy Dorayaki'
     const dorayakiAvailableStock = document.getElementById('dorayakiAvailableStock')
     dorayakiAvailableStock.innerHTML = availableStock
-    document.getElementById('currStock').innerHTML = currStock
-    const submitButton = document.getElementById('submitStock')
-    submitButton.style.opacity = isAdmin ? 0 : 1
+    const dorayakiCurrentStock = document.getElementById('currStock')
+    dorayakiCurrentStock.innerHTML = currStock
 
-    if (isAdmin) {
+    if (isAdmin === '1') {
         document.getElementById('dorayakiPrice').style.display = 'none'
         document.getElementById('changeStockPrice').style.display = 'none'
         successText.innerHTML = 'Stock changed successfully!'
     } else {
-        document.getElementById('dorayakiPrice').innerHTML = dorayaki.price
-        document.getElementById('dorayakiTotalPrice').innerHTML = dorayaki.price * availableStock
+        document.getElementById('dorayakiPriceSpan').innerHTML = dorayaki.price
+        document.getElementById('dorayakiTotalPrice').innerHTML = dorayaki.price * currStock
         successText.innerHTML = 'Bought successfully!<br>Thank you for purchasing!'
     }
     
-
     const reduceButton = document.getElementById('reduceStock')    
-    if (availableStock === 0) {
-        reduceButton.style.opacity = 0
+    if (currStock === 0) {
+        reduceButton.disabled = true
     }
     reduceButton.onclick = function() {reduceStock()}
 
     const addButton = document.getElementById('addStock')
-    addButton.style.opacity = isAdmin ? 1 : 0
     addButton.onclick = function() {addStock()}
 
+    const submitButton = document.getElementById('submitStock')
     submitButton.onclick = async function() {
         try {
             const changedStock = Math.abs(availableStock - currStock)
-            const endpoint = isAdmin ? `changeStock.php?name=${dorayaki.name}&stock=${changedStock}&type=${currStock > availableStock ? 'add' : 'reduce'}` : `buyDorayaki.php?name=${dorayaki.name}&stock=${changedStock}`
+            const endpoint = isAdmin === '1' ? `changeStock.php?name=${dorayaki.name}&stock=${changedStock}&type=${currStock > availableStock ? 'add' : 'reduce'}` : `buyDorayaki.php?name=${dorayaki.name}&stock=${changedStock}`
 
             await fetchDatas(endpoint)
                 .then(data => {
@@ -102,15 +104,22 @@ async function renderStock(dorayakiID) {
                 })
            
             successText.style.opacity = 1
+            
+            if (isAdmin === '1') {
+                availableStock = currStock
+            } else {
+                console.log(availableStock, currStock)
+                availableStock -= currStock
+                currStock = 0
+                dorayakiCurrentStock.innerHTML = currStock
+                reduceButton.disabled = true
+            }
 
-            dorayakiAvailableStock.innerHTML = currStock
-            availableStock = currStock
-            submitButton.style.opacity = 0
-
+            dorayakiAvailableStock.innerHTML = availableStock
+            submitButton.disabled = true
         } catch(err) {
-            console.log(err)
             successText.style.opacity = 1
-            successText.innerHTML = isAdmin ? 'Dorayaki stock not successfully changed!' : 'Dorayaki not bought successfully!'
+            successText.innerHTML = isAdmin === '1' ? 'Dorayaki stock not successfully changed!' : 'Dorayaki not bought successfully!'
         }
     }
 }
