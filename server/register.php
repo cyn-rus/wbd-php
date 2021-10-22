@@ -42,7 +42,11 @@
                 header('Location: ../client/pages/register.html');
             } else {
                 echo "Insert data success...\n";
-                header('Location: ../client/pages/login.html');
+                $cookie_name = "username";
+                $cookie_value = $_REQUEST['inputUsername'];
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+                setcookie("isadmin", 0, time() + (86400 * 30), "/");
+                header('Location: ../client/pages/dashboard.html');
             }
         } else {
             header('Location: ../client/pages/register.html'); 
