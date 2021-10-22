@@ -1,19 +1,10 @@
 // Menampilkan username pengguna
 const username = document.getElementById("username")
 const cookie = decodeURIComponent(document.cookie);
-// const usernameCookie = (cookie.split(';'))[0]
-
-// let usernameCookie = document.cookie;
-// let x = usernameCookie.split('=');
-// console.log(usernameCookie)
-// const usernameFromCookie = (usernameCookie.split('='))[1]
 const usernameFromCookie = getCookie("username")
 
-// let usernameFromCookie = usernameCookie["username"];
 const child = `<h3>Username  ${usernameFromCookie}</h3>`
 username.innerHTML = child;
-
-
 
 const maxDisplayedDorayaki = 8;
 

@@ -1,8 +1,3 @@
-// versi admin & user
-// admin: search bar, tambah varian (add), logout
-// user: search bar, daftar pembelian (bonus), logout
-
-// isAdmin: boolean
 const isAdmin = getCookie('isadmin')
 
 function renderHeader() {
@@ -27,7 +22,6 @@ function renderHeader() {
 
     const searchBar = document.getElementById('searchDorayaki');
     searchBar.addEventListener('keydown', (e) => {
-        console.log(e)
         if (e.key === 'Enter') {
             window.location = `search.html?q=${e.target.value}`
         }

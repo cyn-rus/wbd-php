@@ -3,7 +3,6 @@ function getDorayakis() {
     xhr.open('GET', 'getDorayakis.php')
 
     xhr.onload = function() {
-        console.log(this.responseText)
         return this.responseText
     }
     xhr.send()

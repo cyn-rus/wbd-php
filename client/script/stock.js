@@ -1,6 +1,3 @@
-// isAdmin: boolean
-// admin: ga ada harga
-// user: ada harga
 const imgPath = '../../db/images/'
 
 function isStockValid(availableStock, currStock) {
@@ -108,7 +105,6 @@ async function renderStock(dorayakiID) {
             if (isAdmin === '1') {
                 availableStock = currStock
             } else {
-                console.log(availableStock, currStock)
                 availableStock -= currStock
                 currStock = 0
                 dorayakiCurrentStock.innerHTML = currStock
