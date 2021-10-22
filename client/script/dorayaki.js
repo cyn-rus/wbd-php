@@ -3,7 +3,7 @@
 // admin: ubah stok, delete
 
 function confirmDelete(){
-    let deleteConfirmation = confirm("Apakah anda yakin mau menghapus varian dorayaki ini?")
+    let deleteConfirmation = confirm("Are you sure you want to delete this dorayaki variant?")
     if (deleteConfirmation == true){
         const paramString = window.location.search
         const searchParams = new URLSearchParams(paramString)
@@ -33,7 +33,9 @@ async function renderDorayakiPage() {
     console.log(dorayakiDetails)
 
     const dorayakiDetailsContainer = document.getElementById('container')
-    let child = `<img src="${dorayakiDetails[0].image}">
+    const imgPath = '../../db/images/'
+
+    let child = `<img src='${imgPath + dorayakiDetails[0].image}' alt=${capitalizeSentence(dorayakiDetails[0].name)}>
                     <h1>${dorayakiDetails[0].name}</h1>
                     <div>${dorayakiDetails[0].description}</div>
                     <div>Price: ${dorayakiDetails[0].price}</div>
