@@ -1,6 +1,5 @@
 <?php
     $maxDorayaki = $_REQUEST['max'];
-    // echo $maxDorayaki;
     $db = new SQLite3('../db/doraemonangis.sq3');
     $sql = "SELECT dorayaki_id, dorayakis.dorayaki_name, IFNULL(SUM(amount), 0) as sold, description, image 
             FROM dorayakis

@@ -38,11 +38,8 @@
         echo "login success";
         $cookie_name = "username";
         $cookie_value = $_REQUEST['inputUsername'];
-        // session_start();
         setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
         
-        // $_SESSION[$cookie_name] = $cookie_value;
-
         $sql2 = "SELECT * FROM users WHERE username='" . $username . "' AND isadmin=1";
         $result2 = $db->query($sql2);
 
@@ -54,10 +51,8 @@
         
         if ($found2 === 1) {
             setcookie("isadmin", 1, time() + (86400 * 30), "/");
-            // $_SESSION['user'] = array("username" => $cookie_value, "isadmin" => 1);
         } else {
             setcookie("isadmin", 0, time() + (86400 * 30), "/");
-            // $_SESSION['user'] = array("username" => $cookie_value, "isadmin" => 0);
         }
 
         header("location:../client/pages/dashboard.html");
