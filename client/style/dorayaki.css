@@ -3,10 +3,10 @@
     margin-top : 5px;
 }
 
-/* .dorayakiDetailContainer{
-    display : flex;
-    text-align : center;
-} */
+.dorayakiDetailContainer img{
+    height : 15rem;
+    width : auto;
+}
 
 .deleteButton{
     width : 70px;

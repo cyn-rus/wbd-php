@@ -7,9 +7,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transform: translateY(5%);
 }
 
-.search-bar {
+.search-container .search-bar {
     padding-top: 3rem;
 }
 
@@ -17,7 +18,7 @@
     color: white;
 }
 
-#searchDorayaki {
+#searchDorayakiPage {
     font-size: 1.2rem;
 }
 

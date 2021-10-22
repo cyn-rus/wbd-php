@@ -27,7 +27,7 @@ input[type='submit'] {
 .background {
     background-image: url("https://wwv.yify-magnet.com/uploads/movies/eiga-doraemon-nobita-no-shin-kyoryu-2020-tt10588750/large-screenshot-2.jpg");
 
-    filter: blur(1px);
+    filter: blur(3px);
     -webkit-filter: blur(3px);
 
     height: 100vh;
@@ -35,6 +35,7 @@ input[type='submit'] {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed;
 
     opacity : 0.9;
 }
