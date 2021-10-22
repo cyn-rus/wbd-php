@@ -1,7 +1,6 @@
 function clearPage() {
     document.getElementById('paginationMenu').innerHTML = ''
     document.getElementsByTagName('p')[0].innerHTML = ''
-
 }
 
 async function renderSearch(dorayaki) {
@@ -18,8 +17,9 @@ async function renderSearch(dorayaki) {
         return parseDataFromAJAX(data)
     })
 
-    const inputField = document.getElementById('searchDorayaki')
+    const inputField = document.getElementById('searchDorayakiPage')
     inputField.value = dorayaki
+    document.getElementById('searchDorayaki').value = dorayaki
 
     if (dorayakis.length === 0) {
         clearPage()
@@ -70,7 +70,7 @@ async function renderSearch(dorayaki) {
 
         searchResult.innerHTML = ''
         for (let i = (idx - 1) * dorayakisPerPage; i < (idx * dorayakisPerPage) && i < dorayakis.length; i++) {
-            searchResult.innerHTML += renderDorayakiCard(dorayakis[i], true)
+            searchResult.innerHTML += renderDorayakiCard(dorayakis[i])
         }
     }
 
